@@ -15,7 +15,7 @@ public class CharacterListResponse {
         mCharacters = characters;
     }
 
-    public List<Character> getCharacter() {
+    public List<Character> getCharacters() {
         return mCharacters;
     }
 }
