@@ -3,7 +3,7 @@ package me.davidllorca.diworkshop.ui.common.mvcviews;
 /**
  * This interface corresponds to MVC views that need to notify MVC controllers of input events.
  */
-interface ObservableViewMvc<ListenerType> extends ViewMvc {
+public interface ObservableViewMvc<ListenerType> extends ViewMvc {
 
     /**
      * Register a listener that will be notified of any input events performed on this MVC view
