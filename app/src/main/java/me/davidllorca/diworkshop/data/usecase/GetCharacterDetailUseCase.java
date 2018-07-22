@@ -6,7 +6,6 @@ import me.davidllorca.diworkshop.data.remote.RickAndMortyApi;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class GetCharacterDetailUseCase extends BaseObservable<GetCharacterDetailUseCase.Listener> {
 
@@ -18,8 +17,8 @@ public class GetCharacterDetailUseCase extends BaseObservable<GetCharacterDetail
     private RickAndMortyApi mRickAndMortyApi;
     private Call<Character> mCall;
 
-    public GetCharacterDetailUseCase(Retrofit retrofit) {
-        mRickAndMortyApi = retrofit.create(RickAndMortyApi.class);
+    public GetCharacterDetailUseCase(RickAndMortyApi rickAndMortyApi) {
+        mRickAndMortyApi = rickAndMortyApi;
     }
 
     public void execute(int characterId) {

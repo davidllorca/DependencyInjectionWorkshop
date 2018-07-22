@@ -11,7 +11,6 @@ import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
 import me.davidllorca.diworkshop.ui.common.dialogs.ServerErrorDialogFragment;
-import retrofit2.Retrofit;
 
 public class DetailActivity extends AppCompatActivity
         implements DetailViewMvc.Listener, GetCharacterDetailUseCase.Listener {
@@ -36,8 +35,7 @@ public class DetailActivity extends AppCompatActivity
         mViewMvc = new DetailViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
 
-        Retrofit retrofit = ((MyApplication) getApplication()).getRetrofit();
-        mGetCharacterDetailUseCase = new GetCharacterDetailUseCase(retrofit);
+        mGetCharacterDetailUseCase = ((MyApplication) getApplication()).getCharacterDetailUseCase();
 
         mDialogsManager = new DialogsManager(getSupportFragmentManager());
 

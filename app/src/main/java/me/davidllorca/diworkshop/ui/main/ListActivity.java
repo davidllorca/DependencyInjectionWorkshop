@@ -12,7 +12,6 @@ import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
 import me.davidllorca.diworkshop.ui.common.dialogs.ServerErrorDialogFragment;
 import me.davidllorca.diworkshop.ui.detail.DetailActivity;
-import retrofit2.Retrofit;
 
 public class ListActivity extends AppCompatActivity implements
         ListViewMvc.Listener, GetCharactersUseCase.Listener {
@@ -28,8 +27,7 @@ public class ListActivity extends AppCompatActivity implements
         mViewMvc = new ListViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
 
-        Retrofit retrofit = ((MyApplication) getApplication()).getRetrofit();
-        mGetCharactersUseCase = new GetCharactersUseCase(retrofit);
+        mGetCharactersUseCase = ((MyApplication) getApplication()).getCharactersUseCase();
 
         mDialogsManager = new DialogsManager(getSupportFragmentManager());
     }
