@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity
         mViewMvc = new DetailViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
 
-        mGetCharacterDetailUseCase = ((MyApplication) getApplication()).getCharacterDetailUseCase();
+        mGetCharacterDetailUseCase = ((MyApplication) getApplication()).getCompositionRoot().getCharacterDetailUseCase();
 
         mDialogsManager = new DialogsManager(getSupportFragmentManager());
 

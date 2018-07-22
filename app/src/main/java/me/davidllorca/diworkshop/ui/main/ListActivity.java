@@ -27,7 +27,7 @@ public class ListActivity extends AppCompatActivity implements
         mViewMvc = new ListViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
 
-        mGetCharactersUseCase = ((MyApplication) getApplication()).getCharactersUseCase();
+        mGetCharactersUseCase = ((MyApplication) getApplication()).getCompositionRoot().getCharactersUseCase();
 
         mDialogsManager = new DialogsManager(getSupportFragmentManager());
     }
