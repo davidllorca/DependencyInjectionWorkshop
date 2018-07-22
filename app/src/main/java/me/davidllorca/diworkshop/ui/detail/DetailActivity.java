@@ -2,13 +2,12 @@ package me.davidllorca.diworkshop.ui.detail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.TextView;
+import android.view.LayoutInflater;
 
 import me.davidllorca.diworkshop.Constants;
-import me.davidllorca.diworkshop.R;
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.remote.RickAndMortyApi;
 import me.davidllorca.diworkshop.ui.common.ServerErrorDialogFragment;
@@ -18,7 +17,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DetailActivity extends AppCompatActivity implements Callback<Character> {
+public class DetailActivity extends AppCompatActivity implements Callback<Character>, DetailViewMvc.Listener {
 
     public static final String EXTRA_CHARACTER_ID = "EXTRA_CHARACTER_ID";
 
@@ -28,11 +27,7 @@ public class DetailActivity extends AppCompatActivity implements Callback<Charac
         context.startActivity(intent);
     }
 
-    private TextView mNameTv;
-    private TextView mStatusTv;
-    private TextView mSpeciesTv;
-    private TextView mTypeTv;
-    private TextView mGenderTv;
+    private DetailViewMvc mViewMvc;
 
     private RickAndMortyApi mRickAndMortyApi;
 
@@ -43,13 +38,9 @@ public class DetailActivity extends AppCompatActivity implements Callback<Charac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        mViewMvc = new DetailViewMvcImpl(LayoutInflater.from(this), null);
+        setContentView(mViewMvc.getRootView());
 
-        mNameTv = findViewById(R.id.tv_name_item);
-        mStatusTv = findViewById(R.id.tv_status_item);
-        mSpeciesTv = findViewById(R.id.tv_species_item);
-        mTypeTv = findViewById(R.id.tv_type_item);
-        mGenderTv = findViewById(R.id.tv_gender_item);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -66,6 +57,7 @@ public class DetailActivity extends AppCompatActivity implements Callback<Charac
     @Override
     protected void onStart() {
         super.onStart();
+        mViewMvc.registerListener(this);
         mCall = mRickAndMortyApi.getDetailCharacter(mCharacterId);
         mCall.enqueue(this);
     }
@@ -73,6 +65,7 @@ public class DetailActivity extends AppCompatActivity implements Callback<Charac
     @Override
     protected void onStop() {
         super.onStop();
+        mViewMvc.unregisterListener(this);
         if (mCall != null) {
             mCall.cancel();
         }
@@ -83,11 +76,7 @@ public class DetailActivity extends AppCompatActivity implements Callback<Charac
     public void onResponse(Call<Character> call, Response<Character> response) {
         if (response.isSuccessful() && (response.body()) != null) {
             Character character = response.body();
-            mNameTv.setText(character.getName());
-            mStatusTv.setText(character.getStatus());
-            mSpeciesTv.setText(character.getSpecies());
-            mTypeTv.setText(character.getType());
-            mGenderTv.setText(character.getGender());
+            mViewMvc.bindCharacter(character);
         } else {
             onFailure(call, null);
         }
