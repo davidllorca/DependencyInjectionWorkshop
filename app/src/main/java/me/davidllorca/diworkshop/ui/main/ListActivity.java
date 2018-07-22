@@ -1,7 +1,6 @@
 package me.davidllorca.diworkshop.ui.main;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 
@@ -9,7 +8,8 @@ import java.util.List;
 
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
-import me.davidllorca.diworkshop.ui.common.ServerErrorDialogFragment;
+import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
+import me.davidllorca.diworkshop.ui.common.dialogs.ServerErrorDialogFragment;
 import me.davidllorca.diworkshop.ui.detail.DetailActivity;
 
 public class ListActivity extends AppCompatActivity implements
@@ -17,6 +17,7 @@ public class ListActivity extends AppCompatActivity implements
 
     private ListViewMvc mViewMvc;
     private GetCharactersUseCase mGetCharactersUseCase;
+    private DialogsManager mDialogsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,10 @@ public class ListActivity extends AppCompatActivity implements
 
         mViewMvc = new ListViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
+
         mGetCharactersUseCase = new GetCharactersUseCase();
+
+        mDialogsManager = new DialogsManager(getSupportFragmentManager());
     }
 
     @Override
@@ -54,9 +58,6 @@ public class ListActivity extends AppCompatActivity implements
 
     @Override
     public void onError() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(ServerErrorDialogFragment.newInstance(), null)
-                .commitAllowingStateLoss();
+        mDialogsManager.showRetainedDialogWithId(ServerErrorDialogFragment.newInstance(),"");
     }
 }

@@ -1,4 +1,4 @@
-package me.davidllorca.diworkshop.ui.common;
+package me.davidllorca.diworkshop.ui.common.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

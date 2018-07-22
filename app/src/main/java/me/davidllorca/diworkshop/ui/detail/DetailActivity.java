@@ -3,13 +3,13 @@ package me.davidllorca.diworkshop.ui.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
-import me.davidllorca.diworkshop.ui.common.ServerErrorDialogFragment;
+import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
+import me.davidllorca.diworkshop.ui.common.dialogs.ServerErrorDialogFragment;
 
 public class DetailActivity extends AppCompatActivity
         implements DetailViewMvc.Listener, GetCharacterDetailUseCase.Listener {
@@ -24,6 +24,7 @@ public class DetailActivity extends AppCompatActivity
 
     private DetailViewMvc mViewMvc;
     private GetCharacterDetailUseCase mGetCharacterDetailUseCase;
+    private DialogsManager mDialogsManager;
 
     private int mCharacterId;
 
@@ -32,7 +33,10 @@ public class DetailActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         mViewMvc = new DetailViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
+
         mGetCharacterDetailUseCase = new GetCharacterDetailUseCase();
+
+        mDialogsManager = new DialogsManager(getSupportFragmentManager());
 
         //noinspection ConstantConditions
         mCharacterId = getIntent().getExtras().getInt(EXTRA_CHARACTER_ID);
@@ -61,9 +65,6 @@ public class DetailActivity extends AppCompatActivity
 
     @Override
     public void onError() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(ServerErrorDialogFragment.newInstance(), null)
-                .commitAllowingStateLoss();
+        mDialogsManager.showRetainedDialogWithId(ServerErrorDialogFragment.newInstance(),"");
     }
 }
