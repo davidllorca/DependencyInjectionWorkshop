@@ -1,8 +1,8 @@
 package me.davidllorca.diworkshop.ui.main;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,7 +47,7 @@ public class ListActivity extends AppCompatActivity  implements
 
         mCharacterAdapter = new CharacterAdapter(new OnCharacterClickListener() {
             @Override
-            public void onQuestionClicked(Character character) {
+            public void onCharacterClicked(Character character) {
                 DetailActivity.start(ListActivity.this, character.getId());
             }
         });
@@ -102,7 +102,7 @@ public class ListActivity extends AppCompatActivity  implements
 
 
     public interface OnCharacterClickListener {
-        void onQuestionClicked(Character character);
+        void onCharacterClicked(Character character);
     }
 
     public static class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.CharacterViewHolder> {
@@ -144,7 +144,7 @@ public class ListActivity extends AppCompatActivity  implements
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onQuestionClicked(mCharacterList.get(position));
+                    mListener.onCharacterClicked(mCharacterList.get(position));
                 }
             });
         }
