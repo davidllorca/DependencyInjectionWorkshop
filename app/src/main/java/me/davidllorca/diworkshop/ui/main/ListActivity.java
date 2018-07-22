@@ -9,25 +9,23 @@ import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
 import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
 import me.davidllorca.diworkshop.ui.common.dialogs.ServerErrorDialogFragment;
+import me.davidllorca.diworkshop.ui.common.mvcviews.ViewMvcFactory;
 import me.davidllorca.diworkshop.ui.detail.DetailActivity;
 
 public class ListActivity extends BaseActivity
         implements ListViewMvc.Listener, GetCharactersUseCase.Listener {
 
+    public ViewMvcFactory mViewMvcFactory;
+    public GetCharactersUseCase mGetCharactersUseCase;
+    public DialogsManager mDialogsManager;
+
     private ListViewMvc mViewMvc;
-    private GetCharactersUseCase mGetCharactersUseCase;
-    private DialogsManager mDialogsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mViewMvc = getCompositionRoot().getMvcFactory().newInstance(ListViewMvc.class, null);
+        mViewMvc = mViewMvcFactory.newInstance(ListViewMvc.class, null);
         setContentView(mViewMvc.getRootView());
-
-        mGetCharactersUseCase = getCompositionRoot().getGetCharactersUseCase();
-
-        mDialogsManager = getCompositionRoot().getDialogsManager();
     }
 
     @Override

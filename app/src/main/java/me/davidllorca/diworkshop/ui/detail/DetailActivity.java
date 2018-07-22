@@ -9,6 +9,7 @@ import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
 import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
 import me.davidllorca.diworkshop.ui.common.dialogs.ServerErrorDialogFragment;
+import me.davidllorca.diworkshop.ui.common.mvcviews.ViewMvcFactory;
 
 public class DetailActivity extends BaseActivity
         implements DetailViewMvc.Listener, GetCharacterDetailUseCase.Listener {
@@ -21,21 +22,19 @@ public class DetailActivity extends BaseActivity
         context.startActivity(intent);
     }
 
+    public ViewMvcFactory mViewMvcFactory;
+    public GetCharacterDetailUseCase mGetCharacterDetailUseCase;
+    public DialogsManager mDialogsManager;
+
     private DetailViewMvc mViewMvc;
-    private GetCharacterDetailUseCase mGetCharacterDetailUseCase;
-    private DialogsManager mDialogsManager;
 
     private int mCharacterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewMvc = getCompositionRoot().getMvcFactory().newInstance(DetailViewMvc.class, null);
+        mViewMvc = mViewMvcFactory.newInstance(DetailViewMvc.class, null);
         setContentView(mViewMvc.getRootView());
-
-        mGetCharacterDetailUseCase = getCompositionRoot().getGetCharacterDetailUseCase();
-
-        mDialogsManager = getCompositionRoot().getDialogsManager();
 
         //noinspection ConstantConditions
         mCharacterId = getIntent().getExtras().getInt(EXTRA_CHARACTER_ID);
