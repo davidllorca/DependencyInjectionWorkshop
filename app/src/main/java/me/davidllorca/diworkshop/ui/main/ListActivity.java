@@ -24,6 +24,8 @@ public class ListActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getInjector().inject(this);
+
         mViewMvc = mViewMvcFactory.newInstance(ListViewMvc.class, null);
         setContentView(mViewMvc.getRootView());
     }

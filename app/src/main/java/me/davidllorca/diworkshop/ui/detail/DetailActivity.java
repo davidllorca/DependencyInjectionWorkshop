@@ -33,6 +33,8 @@ public class DetailActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getInjector().inject(this);
+
         mViewMvc = mViewMvcFactory.newInstance(DetailViewMvc.class, null);
         setContentView(mViewMvc.getRootView());
 
