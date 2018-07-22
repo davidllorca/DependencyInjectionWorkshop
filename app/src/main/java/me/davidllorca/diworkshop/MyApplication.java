@@ -25,6 +25,7 @@ public class MyApplication extends Application {
         return mRetrofit;
     }
 
+    @UiThread
     private RickAndMortyApi getRickAndMortyApi(){
         if(mRickAndMortyApi == null){
             mRickAndMortyApi = getRetrofit().create(RickAndMortyApi.class);
@@ -32,11 +33,12 @@ public class MyApplication extends Application {
         return mRickAndMortyApi;
     }
 
-
+    @UiThread
     public GetCharactersUseCase getCharactersUseCase() {
         return new GetCharactersUseCase(getRickAndMortyApi());
     }
 
+    @UiThread
     public GetCharacterDetailUseCase getCharacterDetailUseCase() {
         return new GetCharacterDetailUseCase(getRickAndMortyApi());
     }
