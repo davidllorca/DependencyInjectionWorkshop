@@ -6,7 +6,6 @@ import me.davidllorca.diworkshop.Constants;
 import me.davidllorca.diworkshop.data.remote.RickAndMortyApi;
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
 import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
-import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManagerFactory;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -41,7 +40,4 @@ public class CompositionRoot {
         return new GetCharacterDetailUseCase(getRickAndMortyApi());
     }
 
-    public DialogsManagerFactory getDialogsManagerFactory() {
-        return new DialogsManagerFactory();
-    }
 }

@@ -34,9 +34,9 @@ public class DetailActivity extends BaseActivity
         mViewMvc = new DetailViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
 
-        mGetCharacterDetailUseCase = getCompositionRoot().getCharacterDetailUseCase();
+        mGetCharacterDetailUseCase = getCompositionRoot().getGetCharacterDetailUseCase();
 
-        mDialogsManager = getCompositionRoot().getDialogsManagerFactory().newDialogsManager(getSupportFragmentManager());
+        mDialogsManager = getCompositionRoot().getDialogsManager();
 
         //noinspection ConstantConditions
         mCharacterId = getIntent().getExtras().getInt(EXTRA_CHARACTER_ID);

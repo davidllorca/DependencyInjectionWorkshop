@@ -26,9 +26,9 @@ public class ListActivity extends BaseActivity
         mViewMvc = new ListViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
 
-        mGetCharactersUseCase = getCompositionRoot().getCharactersUseCase();
+        mGetCharactersUseCase = getCompositionRoot().getGetCharactersUseCase();
 
-        mDialogsManager = getCompositionRoot().getDialogsManagerFactory().newDialogsManager(getSupportFragmentManager());
+        mDialogsManager = getCompositionRoot().getDialogsManager();
     }
 
     @Override
