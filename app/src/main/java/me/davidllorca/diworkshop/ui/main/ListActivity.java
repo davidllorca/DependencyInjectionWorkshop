@@ -28,7 +28,7 @@ public class ListActivity extends BaseActivity
 
         mGetCharactersUseCase = getCompositionRoot().getCharactersUseCase();
 
-        mDialogsManager = getCompositionRoot().getDialogsManager(getSupportFragmentManager());
+        mDialogsManager = getCompositionRoot().getDialogsManagerFactory().newDialogsManager(getSupportFragmentManager());
     }
 
     @Override

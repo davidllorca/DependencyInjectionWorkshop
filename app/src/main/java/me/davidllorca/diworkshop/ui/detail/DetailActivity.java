@@ -36,7 +36,7 @@ public class DetailActivity extends BaseActivity
 
         mGetCharacterDetailUseCase = getCompositionRoot().getCharacterDetailUseCase();
 
-        mDialogsManager = getCompositionRoot().getDialogsManager(getSupportFragmentManager());
+        mDialogsManager = getCompositionRoot().getDialogsManagerFactory().newDialogsManager(getSupportFragmentManager());
 
         //noinspection ConstantConditions
         mCharacterId = getIntent().getExtras().getInt(EXTRA_CHARACTER_ID);
