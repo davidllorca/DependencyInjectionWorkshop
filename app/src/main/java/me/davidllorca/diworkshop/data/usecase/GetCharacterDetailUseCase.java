@@ -1,13 +1,8 @@
 package me.davidllorca.diworkshop.data.usecase;
 
-import android.support.annotation.Nullable;
-
-import java.util.List;
-
 import me.davidllorca.diworkshop.Constants;
 import me.davidllorca.diworkshop.common.BaseObservable;
 import me.davidllorca.diworkshop.data.model.Character;
-import me.davidllorca.diworkshop.data.remote.CharacterListResponse;
 import me.davidllorca.diworkshop.data.remote.RickAndMortyApi;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,18 +10,18 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class GetCharactersUseCase extends BaseObservable<GetCharactersUseCase.Listener> {
+public class GetCharacterDetailUseCase extends BaseObservable<GetCharacterDetailUseCase.Listener> {
 
     public interface Listener {
-        void onSuccess(List<Character> characters);
+        void onSuccess(Character character);
         void onError();
     }
 
     private RickAndMortyApi mRickAndMortyApi;
-    @Nullable private Call<CharacterListResponse> mCall;
+    private Call<Character> mCall;
 
-    public GetCharactersUseCase() {
-        // init retrofit
+    public GetCharacterDetailUseCase() {
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -35,34 +30,34 @@ public class GetCharactersUseCase extends BaseObservable<GetCharactersUseCase.Li
         mRickAndMortyApi = retrofit.create(RickAndMortyApi.class);
     }
 
-    public void execute() {
+    public void execute(int characterId) {
         cancelCurrentCallIfActive();
-        mCall = mRickAndMortyApi.getAllCharacters();
-        mCall.enqueue(new Callback<CharacterListResponse>() {
+        mCall = mRickAndMortyApi.getDetailCharacter(characterId);
+        mCall.enqueue(new Callback<Character>() {
             @Override
-            public void onResponse(Call<CharacterListResponse> call, Response<CharacterListResponse> response) {
+            public void onResponse(Call<Character> call, Response<Character> response) {
                 if(response.isSuccessful()){
-                    notifySuccess(response.body().getCharacters());
+                    notifySuccess(response.body());
                 } else {
                     notifyFail();
                 }
             }
 
             @Override
-            public void onFailure(Call<CharacterListResponse> call, Throwable t) {
+            public void onFailure(Call<Character> call, Throwable t) {
                 notifyFail();
             }
         });
     }
 
-    private void notifySuccess(List<Character> characters) {
-        for(Listener listener: getListeners()) {
+    private void notifySuccess(Character characters) {
+        for(GetCharacterDetailUseCase.Listener listener: getListeners()) {
             listener.onSuccess(characters);
         }
     }
 
     private void notifyFail() {
-        for(Listener listener: getListeners()) {
+        for(GetCharacterDetailUseCase.Listener listener: getListeners()) {
             listener.onError();
         }
     }
