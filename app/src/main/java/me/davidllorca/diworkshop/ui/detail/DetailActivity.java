@@ -3,16 +3,15 @@ package me.davidllorca.diworkshop.ui.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 
-import me.davidllorca.diworkshop.MyApplication;
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
+import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
 import me.davidllorca.diworkshop.ui.common.dialogs.ServerErrorDialogFragment;
 
-public class DetailActivity extends AppCompatActivity
+public class DetailActivity extends BaseActivity
         implements DetailViewMvc.Listener, GetCharacterDetailUseCase.Listener {
 
     public static final String EXTRA_CHARACTER_ID = "EXTRA_CHARACTER_ID";
@@ -35,7 +34,7 @@ public class DetailActivity extends AppCompatActivity
         mViewMvc = new DetailViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
 
-        mGetCharacterDetailUseCase = ((MyApplication) getApplication()).getCompositionRoot().getCharacterDetailUseCase();
+        mGetCharacterDetailUseCase = getCompositionRoot().getCharacterDetailUseCase();
 
         mDialogsManager = new DialogsManager(getSupportFragmentManager());
 

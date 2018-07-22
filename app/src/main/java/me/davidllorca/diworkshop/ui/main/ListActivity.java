@@ -1,20 +1,19 @@
 package me.davidllorca.diworkshop.ui.main;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 
 import java.util.List;
 
-import me.davidllorca.diworkshop.MyApplication;
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
+import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
 import me.davidllorca.diworkshop.ui.common.dialogs.ServerErrorDialogFragment;
 import me.davidllorca.diworkshop.ui.detail.DetailActivity;
 
-public class ListActivity extends AppCompatActivity implements
-        ListViewMvc.Listener, GetCharactersUseCase.Listener {
+public class ListActivity extends BaseActivity
+        implements ListViewMvc.Listener, GetCharactersUseCase.Listener {
 
     private ListViewMvc mViewMvc;
     private GetCharactersUseCase mGetCharactersUseCase;
@@ -27,7 +26,7 @@ public class ListActivity extends AppCompatActivity implements
         mViewMvc = new ListViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
 
-        mGetCharactersUseCase = ((MyApplication) getApplication()).getCompositionRoot().getCharactersUseCase();
+        mGetCharactersUseCase = getCompositionRoot().getCharactersUseCase();
 
         mDialogsManager = new DialogsManager(getSupportFragmentManager());
     }
