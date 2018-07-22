@@ -1,7 +1,7 @@
 package me.davidllorca.diworkshop.common.di;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
 import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
@@ -22,23 +22,31 @@ public class Injector {
         Field[] fields = clazz.getDeclaredFields();
 
         for (Field field : fields) {
-            if(isPublicNonStaticNonFinal(field)){
+            if(isAnnotatedForInjection(field)){
                 injectField(client, field);
             }
         }
 
     }
 
-    private boolean isPublicNonStaticNonFinal(Field field) {
-        int modifiers = field.getModifiers();
-        return Modifier.isPublic(modifiers) &&
-                !Modifier.isStatic(modifiers) &&
-                !Modifier.isFinal(modifiers);
+    private boolean isAnnotatedForInjection(Field field) {
+        Annotation[] annotations = field.getDeclaredAnnotations();
+        for(Annotation annotation: annotations){
+            if(annotation instanceof Service){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void injectField(Object client, Field field) {
         try {
+            // Make modifier public
+            boolean isAccessibleInitially = field.isAccessible();
+            field.setAccessible(true);
             field.set(client, getServiceForClass(field.getType()));
+            // Make modifier like initial state
+            field.setAccessible(isAccessibleInitially);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }

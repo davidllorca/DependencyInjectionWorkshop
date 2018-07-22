@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import me.davidllorca.diworkshop.common.di.Service;
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
 import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
@@ -22,9 +23,9 @@ public class DetailActivity extends BaseActivity
         context.startActivity(intent);
     }
 
-    public ViewMvcFactory mViewMvcFactory;
-    public GetCharacterDetailUseCase mGetCharacterDetailUseCase;
-    public DialogsManager mDialogsManager;
+    @Service private ViewMvcFactory mViewMvcFactory;
+    @Service private GetCharacterDetailUseCase mGetCharacterDetailUseCase;
+    @Service private DialogsManager mDialogsManager;
 
     private DetailViewMvc mViewMvc;
 

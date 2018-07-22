@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import java.util.List;
 
+import me.davidllorca.diworkshop.common.di.Service;
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
 import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
@@ -15,9 +16,9 @@ import me.davidllorca.diworkshop.ui.detail.DetailActivity;
 public class ListActivity extends BaseActivity
         implements ListViewMvc.Listener, GetCharactersUseCase.Listener {
 
-    public ViewMvcFactory mViewMvcFactory;
-    public GetCharactersUseCase mGetCharactersUseCase;
-    public DialogsManager mDialogsManager;
+    @Service private ViewMvcFactory mViewMvcFactory;
+    @Service private GetCharactersUseCase mGetCharactersUseCase;
+    @Service private DialogsManager mDialogsManager;
 
     private ListViewMvc mViewMvc;
 
