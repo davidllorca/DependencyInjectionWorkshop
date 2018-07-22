@@ -3,7 +3,6 @@ package me.davidllorca.diworkshop.ui.detail;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
@@ -31,7 +30,7 @@ public class DetailActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewMvc = new DetailViewMvcImpl(LayoutInflater.from(this), null);
+        mViewMvc = getCompositionRoot().getMvcFactory().newInstance(DetailViewMvc.class, null);
         setContentView(mViewMvc.getRootView());
 
         mGetCharacterDetailUseCase = getCompositionRoot().getGetCharacterDetailUseCase();

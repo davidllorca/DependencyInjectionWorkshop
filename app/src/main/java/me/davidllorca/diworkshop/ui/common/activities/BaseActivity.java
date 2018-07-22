@@ -1,6 +1,7 @@
 package me.davidllorca.diworkshop.ui.common.activities;
 
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 
 import me.davidllorca.diworkshop.MyApplication;
 import me.davidllorca.diworkshop.common.di.CompositionRoot;
@@ -14,13 +15,14 @@ public class BaseActivity extends AppCompatActivity {
         if(mPresentationCompositionRoot == null){
             mPresentationCompositionRoot = new PresentationCompositionRoot(
                     getAppCompositionRoot(),
-                    getSupportFragmentManager()
+                    getSupportFragmentManager(),
+                    LayoutInflater.from(this)
             );
         }
         return mPresentationCompositionRoot;
     }
 
-    protected CompositionRoot getAppCompositionRoot() {
+    private CompositionRoot getAppCompositionRoot() {
         return ((MyApplication) getApplication()).getCompositionRoot();
     }
 }

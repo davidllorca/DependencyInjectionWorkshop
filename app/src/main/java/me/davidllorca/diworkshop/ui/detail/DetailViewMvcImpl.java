@@ -8,7 +8,7 @@ import me.davidllorca.diworkshop.R;
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.ui.common.mvcviews.BaseViewMvc;
 
-class DetailViewMvcImpl extends BaseViewMvc<DetailViewMvc.Listener> implements DetailViewMvc {
+public class DetailViewMvcImpl extends BaseViewMvc<DetailViewMvc.Listener> implements DetailViewMvc {
 
     private TextView mNameTv;
     private TextView mStatusTv;

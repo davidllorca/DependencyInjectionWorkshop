@@ -1,7 +1,6 @@
 package me.davidllorca.diworkshop.ui.main;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class ListActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewMvc = new ListViewMvcImpl(LayoutInflater.from(this), null);
+        mViewMvc = getCompositionRoot().getMvcFactory().newInstance(ListViewMvc.class, null);
         setContentView(mViewMvc.getRootView());
 
         mGetCharactersUseCase = getCompositionRoot().getGetCharactersUseCase();
