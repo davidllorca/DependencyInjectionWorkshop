@@ -54,4 +54,7 @@ public class Character {
         return gender;
     }
 
+    public String getImage() {
+        return image;
+    }
 }
