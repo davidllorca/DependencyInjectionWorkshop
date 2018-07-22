@@ -5,27 +5,39 @@ import android.view.LayoutInflater;
 
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
 import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
+import me.davidllorca.diworkshop.ui.common.ImageLoader;
+import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
 import me.davidllorca.diworkshop.ui.common.mvcviews.ViewMvcFactory;
 
 public class PresentationCompositionRoot {
 
     private final CompositionRoot mCompositionRoot;
-    private final FragmentManager mFragmentManager;
-    private final LayoutInflater mLayoutInflater;
+    private final BaseActivity mActivity;
 
-    public PresentationCompositionRoot(CompositionRoot compositionRoot, FragmentManager fragmentManager, LayoutInflater layoutInflater) {
+    public PresentationCompositionRoot(CompositionRoot compositionRoot, BaseActivity activity) {
         this.mCompositionRoot = compositionRoot;
-        this.mFragmentManager = fragmentManager;
-        this.mLayoutInflater = layoutInflater;
+        this.mActivity = activity;
+    }
+
+    private FragmentManager getFragmentManager(){
+        return mActivity.getSupportFragmentManager();
+    }
+
+    private LayoutInflater getLayoutInflater() {
+        return LayoutInflater.from(mActivity);
+    }
+
+    private ImageLoader getImageLoader() {
+        return new ImageLoader(mActivity);
     }
 
     public DialogsManager getDialogsManager() {
-        return new DialogsManager(mFragmentManager);
+        return new DialogsManager(getFragmentManager());
     }
 
     public ViewMvcFactory getMvcFactory() {
-        return new ViewMvcFactory(mLayoutInflater);
+        return new ViewMvcFactory(getLayoutInflater(), getImageLoader());
     }
 
     public GetCharactersUseCase getGetCharactersUseCase(){
