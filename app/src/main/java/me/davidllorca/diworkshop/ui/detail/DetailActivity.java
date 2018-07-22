@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 
+import me.davidllorca.diworkshop.MyApplication;
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
 import me.davidllorca.diworkshop.ui.common.dialogs.ServerErrorDialogFragment;
+import retrofit2.Retrofit;
 
 public class DetailActivity extends AppCompatActivity
         implements DetailViewMvc.Listener, GetCharacterDetailUseCase.Listener {
@@ -34,7 +36,8 @@ public class DetailActivity extends AppCompatActivity
         mViewMvc = new DetailViewMvcImpl(LayoutInflater.from(this), null);
         setContentView(mViewMvc.getRootView());
 
-        mGetCharacterDetailUseCase = new GetCharacterDetailUseCase();
+        Retrofit retrofit = ((MyApplication) getApplication()).getRetrofit();
+        mGetCharacterDetailUseCase = new GetCharacterDetailUseCase(retrofit);
 
         mDialogsManager = new DialogsManager(getSupportFragmentManager());
 

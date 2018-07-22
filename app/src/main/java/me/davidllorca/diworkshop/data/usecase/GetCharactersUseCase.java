@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 
-import me.davidllorca.diworkshop.Constants;
 import me.davidllorca.diworkshop.common.BaseObservable;
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.remote.CharacterListResponse;
@@ -13,7 +12,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GetCharactersUseCase extends BaseObservable<GetCharactersUseCase.Listener> {
 
@@ -25,13 +23,7 @@ public class GetCharactersUseCase extends BaseObservable<GetCharactersUseCase.Li
     private RickAndMortyApi mRickAndMortyApi;
     @Nullable private Call<CharacterListResponse> mCall;
 
-    public GetCharactersUseCase() {
-        // init retrofit
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+    public GetCharactersUseCase(Retrofit retrofit) {
         mRickAndMortyApi = retrofit.create(RickAndMortyApi.class);
     }
 

@@ -1,6 +1,5 @@
 package me.davidllorca.diworkshop.data.usecase;
 
-import me.davidllorca.diworkshop.Constants;
 import me.davidllorca.diworkshop.common.BaseObservable;
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.remote.RickAndMortyApi;
@@ -8,7 +7,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GetCharacterDetailUseCase extends BaseObservable<GetCharacterDetailUseCase.Listener> {
 
@@ -20,13 +18,7 @@ public class GetCharacterDetailUseCase extends BaseObservable<GetCharacterDetail
     private RickAndMortyApi mRickAndMortyApi;
     private Call<Character> mCall;
 
-    public GetCharacterDetailUseCase() {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+    public GetCharacterDetailUseCase(Retrofit retrofit) {
         mRickAndMortyApi = retrofit.create(RickAndMortyApi.class);
     }
 
