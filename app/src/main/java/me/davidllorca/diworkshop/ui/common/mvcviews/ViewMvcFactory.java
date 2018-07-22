@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import me.davidllorca.diworkshop.ui.common.ImageLoader;
 import me.davidllorca.diworkshop.ui.detail.DetailViewMvc;
 import me.davidllorca.diworkshop.ui.detail.DetailViewMvcImpl;
 import me.davidllorca.diworkshop.ui.main.ListViewMvc;
@@ -12,9 +13,11 @@ import me.davidllorca.diworkshop.ui.main.ListViewMvcImpl;
 public class ViewMvcFactory {
 
     private final LayoutInflater mLayoutInflater;
+    private final ImageLoader mImageLoader;
 
-    public ViewMvcFactory(LayoutInflater layoutInflater) {
+    public ViewMvcFactory(LayoutInflater layoutInflater, ImageLoader imageLoader) {
         this.mLayoutInflater = layoutInflater;
+        this.mImageLoader = imageLoader;
     }
 
     /**
@@ -31,7 +34,7 @@ public class ViewMvcFactory {
         if(mvcViewClass == ListViewMvc.class){
             viewMvc = new ListViewMvcImpl(mLayoutInflater, container);
         } else if(mvcViewClass == DetailViewMvc.class) {
-            viewMvc = new DetailViewMvcImpl(mLayoutInflater, container);
+            viewMvc = new DetailViewMvcImpl(mLayoutInflater, container, mImageLoader);
         } else {
             throw new IllegalArgumentException("Unsupported MVC view class " + mvcViewClass.getName());
         }
