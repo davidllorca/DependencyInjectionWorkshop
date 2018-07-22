@@ -10,21 +10,19 @@ import me.davidllorca.diworkshop.common.di.PresentationCompositionRoot;
 
 public class BaseActivity extends AppCompatActivity {
 
-    private PresentationCompositionRoot mPresentationCompositionRoot;
+    private boolean mIsInjectionDone;
 
     @UiThread
-    protected Injector getInjector(){
+    protected Injector getInjector() {
+        if (mIsInjectionDone) {
+            throw new RuntimeException("There is no need to use injector more than once");
+        }
+        mIsInjectionDone = true;
         return new Injector(getCompositionRoot());
     }
 
     private PresentationCompositionRoot getCompositionRoot() {
-        if(mPresentationCompositionRoot == null){
-            mPresentationCompositionRoot = new PresentationCompositionRoot(
-                    getAppCompositionRoot(),
-                    this
-            );
-        }
-        return mPresentationCompositionRoot;
+        return new PresentationCompositionRoot(getAppCompositionRoot(),this);
     }
 
     private CompositionRoot getAppCompositionRoot() {
