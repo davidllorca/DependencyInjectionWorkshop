@@ -2,19 +2,25 @@ package me.davidllorca.diworkshop;
 
 import android.app.Application;
 
-import me.davidllorca.diworkshop.common.di.CompositionRoot;
+import me.davidllorca.diworkshop.common.di.application.ApplicationComponent;
+import me.davidllorca.diworkshop.common.di.application.ApplicationModule;
+import me.davidllorca.diworkshop.common.di.application.DaggerApplicationComponent;
 
 public class MyApplication extends Application {
 
-    private CompositionRoot mCompositionRoot;
+    private ApplicationComponent mApplicationComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mCompositionRoot = new CompositionRoot();
+        mApplicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule())
+                .build();
     }
 
-    public CompositionRoot getCompositionRoot() {
-        return mCompositionRoot;
+
+    public ApplicationComponent getApplicationComponent() {
+        return mApplicationComponent;
     }
+
 }

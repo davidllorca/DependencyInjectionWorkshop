@@ -4,9 +4,9 @@ import android.support.annotation.UiThread;
 import android.support.v7.app.AppCompatActivity;
 
 import me.davidllorca.diworkshop.MyApplication;
-import me.davidllorca.diworkshop.common.di.CompositionRoot;
 import me.davidllorca.diworkshop.common.di.Injector;
 import me.davidllorca.diworkshop.common.di.PresentationCompositionRoot;
+import me.davidllorca.diworkshop.common.di.application.ApplicationComponent;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -22,10 +22,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private PresentationCompositionRoot getCompositionRoot() {
-        return new PresentationCompositionRoot(getAppCompositionRoot(),this);
+        return new PresentationCompositionRoot(getApplicationComponent(),this);
     }
 
-    private CompositionRoot getAppCompositionRoot() {
-        return ((MyApplication) getApplication()).getCompositionRoot();
+    private ApplicationComponent getApplicationComponent() {
+        return ((MyApplication) getApplication()).getApplicationComponent();
+
     }
+
 }

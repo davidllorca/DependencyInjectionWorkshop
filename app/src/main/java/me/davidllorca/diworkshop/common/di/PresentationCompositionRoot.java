@@ -3,6 +3,7 @@ package me.davidllorca.diworkshop.common.di;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 
+import me.davidllorca.diworkshop.common.di.application.ApplicationComponent;
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
 import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
 import me.davidllorca.diworkshop.ui.common.ImageLoader;
@@ -12,11 +13,11 @@ import me.davidllorca.diworkshop.ui.common.mvcviews.ViewMvcFactory;
 
 public class PresentationCompositionRoot {
 
-    private final CompositionRoot mCompositionRoot;
+    private final ApplicationComponent mApplicationComponent;
     private final BaseActivity mActivity;
 
-    public PresentationCompositionRoot(CompositionRoot compositionRoot, BaseActivity activity) {
-        this.mCompositionRoot = compositionRoot;
+    public PresentationCompositionRoot(ApplicationComponent applicationComponent, BaseActivity activity) {
+        this.mApplicationComponent = applicationComponent;
         this.mActivity = activity;
     }
 
@@ -41,10 +42,10 @@ public class PresentationCompositionRoot {
     }
 
     public GetCharactersUseCase getGetCharactersUseCase(){
-        return mCompositionRoot.getCharactersUseCase();
+        return mApplicationComponent.getGetCharactersUseCase();
     }
 
     public GetCharacterDetailUseCase getGetCharacterDetailUseCase() {
-        return mCompositionRoot.getCharacterDetailUseCase();
+        return mApplicationComponent.getGetCharacterDetailUseCase();
     }
 }
