@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import me.davidllorca.diworkshop.common.di.Service;
+import javax.inject.Inject;
+
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
 import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
@@ -23,9 +24,9 @@ public class DetailActivity extends BaseActivity
         context.startActivity(intent);
     }
 
-    @Service private ViewMvcFactory mViewMvcFactory;
-    @Service private GetCharacterDetailUseCase mGetCharacterDetailUseCase;
-    @Service private DialogsManager mDialogsManager;
+    @Inject ViewMvcFactory mViewMvcFactory;
+    @Inject GetCharacterDetailUseCase mGetCharacterDetailUseCase;
+    @Inject DialogsManager mDialogsManager;
 
     private DetailViewMvc mViewMvc;
 
@@ -34,7 +35,7 @@ public class DetailActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getInjector().inject(this);
+        getPresentationComponent().inject(this);
 
         mViewMvc = mViewMvcFactory.newInstance(DetailViewMvc.class, null);
         setContentView(mViewMvc.getRootView());

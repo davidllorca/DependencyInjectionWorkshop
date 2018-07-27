@@ -4,7 +4,8 @@ import android.os.Bundle;
 
 import java.util.List;
 
-import me.davidllorca.diworkshop.common.di.Service;
+import javax.inject.Inject;
+
 import me.davidllorca.diworkshop.data.model.Character;
 import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
 import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
@@ -16,16 +17,16 @@ import me.davidllorca.diworkshop.ui.detail.DetailActivity;
 public class ListActivity extends BaseActivity
         implements ListViewMvc.Listener, GetCharactersUseCase.Listener {
 
-    @Service private ViewMvcFactory mViewMvcFactory;
-    @Service private GetCharactersUseCase mGetCharactersUseCase;
-    @Service private DialogsManager mDialogsManager;
+    @Inject ViewMvcFactory mViewMvcFactory;
+    @Inject GetCharactersUseCase mGetCharactersUseCase;
+    @Inject DialogsManager mDialogsManager;
 
     private ListViewMvc mViewMvc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getInjector().inject(this);
+        getPresentationComponent().inject(this);
 
         mViewMvc = mViewMvcFactory.newInstance(ListViewMvc.class, null);
         setContentView(mViewMvc.getRootView());
