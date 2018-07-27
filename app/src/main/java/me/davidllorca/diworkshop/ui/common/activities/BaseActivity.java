@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import me.davidllorca.diworkshop.MyApplication;
 import me.davidllorca.diworkshop.common.di.Injector;
-import me.davidllorca.diworkshop.common.di.PresentationCompositionRoot;
 import me.davidllorca.diworkshop.common.di.application.ApplicationComponent;
+import me.davidllorca.diworkshop.common.di.presentation.DaggerPresentationComponent;
+import me.davidllorca.diworkshop.common.di.presentation.PresentationComponent;
+import me.davidllorca.diworkshop.common.di.presentation.PresentationModule;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -18,11 +20,13 @@ public class BaseActivity extends AppCompatActivity {
             throw new RuntimeException("There is no need to use injector more than once");
         }
         mIsInjectionDone = true;
-        return new Injector(getCompositionRoot());
+        return new Injector(getPresentationComponent());
     }
 
-    private PresentationCompositionRoot getCompositionRoot() {
-        return new PresentationCompositionRoot(getApplicationComponent(),this);
+    private PresentationComponent getPresentationComponent() {
+        return DaggerPresentationComponent.builder()
+                .presentationModule(new PresentationModule(this, getApplicationComponent()))
+                .build();
     }
 
     private ApplicationComponent getApplicationComponent() {

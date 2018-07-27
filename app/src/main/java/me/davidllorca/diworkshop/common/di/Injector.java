@@ -3,6 +3,7 @@ package me.davidllorca.diworkshop.common.di;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
+import me.davidllorca.diworkshop.common.di.presentation.PresentationComponent;
 import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
 import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
@@ -10,10 +11,10 @@ import me.davidllorca.diworkshop.ui.common.mvcviews.ViewMvcFactory;
 
 public class Injector {
 
-    private final PresentationCompositionRoot mPresentationCompositionRoot;
+    private final PresentationComponent mPresentationComponent;
 
-    public Injector(PresentationCompositionRoot presentationCompositionRoot){
-        mPresentationCompositionRoot = presentationCompositionRoot;
+    public Injector(PresentationComponent presentationComponent){
+        this.mPresentationComponent = presentationComponent;
     }
 
     public void inject(Object client){
@@ -54,13 +55,13 @@ public class Injector {
 
     private Object getServiceForClass(Class<?> type) {
         if(type.equals(DialogsManager.class)){
-            return mPresentationCompositionRoot.getDialogsManager();
+            return mPresentationComponent.getDialogsManager();
         } else if(type.equals(ViewMvcFactory.class)) {
-            return mPresentationCompositionRoot.getMvcFactory();
+            return mPresentationComponent.getMvcFactory();
         } else if(type.equals(GetCharactersUseCase.class)){
-            return mPresentationCompositionRoot.getGetCharactersUseCase();
+            return mPresentationComponent.getGetCharactersUseCase();
         } else if(type.equals(GetCharacterDetailUseCase.class)) {
-            return mPresentationCompositionRoot.getGetCharacterDetailUseCase();
+            return mPresentationComponent.getGetCharacterDetailUseCase();
         } else {
             return new RuntimeException("Unsupported service type class: " + type);
         }
