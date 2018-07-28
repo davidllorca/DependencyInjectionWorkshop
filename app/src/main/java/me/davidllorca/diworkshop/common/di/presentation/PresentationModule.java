@@ -8,7 +8,6 @@ import dagger.Provides;
 import me.davidllorca.diworkshop.ui.common.ImageLoader;
 import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
-import me.davidllorca.diworkshop.ui.common.mvcviews.ViewMvcFactory;
 
 @Module
 public class PresentationModule {
@@ -37,11 +36,6 @@ public class PresentationModule {
     @Provides
     DialogsManager getDialogsManager() {
         return new DialogsManager(getFragmentManager());
-    }
-
-    @Provides
-    ViewMvcFactory getMvcFactory() {
-        return new ViewMvcFactory(getLayoutInflater(), getImageLoader());
     }
 
 }
