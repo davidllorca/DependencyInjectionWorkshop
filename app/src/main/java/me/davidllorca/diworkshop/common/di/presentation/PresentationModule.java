@@ -1,5 +1,7 @@
 package me.davidllorca.diworkshop.common.di.presentation;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 
@@ -16,6 +18,16 @@ public class PresentationModule {
 
     public PresentationModule(BaseActivity activity) {
         this.mActivity = activity;
+    }
+
+    @Provides
+    Activity getActivity() {
+        return mActivity;
+    }
+
+    @Provides
+    Context getContext(Activity activity) {
+        return activity;
     }
 
     @Provides
