@@ -20,7 +20,8 @@ public class BaseActivity extends AppCompatActivity {
         }
         mIsInjectionDone = true;
         return DaggerPresentationComponent.builder()
-                .presentationModule(new PresentationModule(this, getApplicationComponent()))
+                .presentationModule(new PresentationModule(this))
+                .applicationComponent(getApplicationComponent())
                 .build();
     }
 

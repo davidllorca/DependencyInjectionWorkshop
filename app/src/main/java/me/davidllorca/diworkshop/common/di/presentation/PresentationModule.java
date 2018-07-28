@@ -5,9 +5,6 @@ import android.view.LayoutInflater;
 
 import dagger.Module;
 import dagger.Provides;
-import me.davidllorca.diworkshop.common.di.application.ApplicationComponent;
-import me.davidllorca.diworkshop.data.usecase.GetCharacterDetailUseCase;
-import me.davidllorca.diworkshop.data.usecase.GetCharactersUseCase;
 import me.davidllorca.diworkshop.ui.common.ImageLoader;
 import me.davidllorca.diworkshop.ui.common.activities.BaseActivity;
 import me.davidllorca.diworkshop.ui.common.dialogs.DialogsManager;
@@ -17,11 +14,9 @@ import me.davidllorca.diworkshop.ui.common.mvcviews.ViewMvcFactory;
 public class PresentationModule {
 
     private final BaseActivity mActivity;
-    private final ApplicationComponent mApplicationComponent;
 
-    public PresentationModule(BaseActivity activity, ApplicationComponent applicationComponent) {
+    public PresentationModule(BaseActivity activity) {
         this.mActivity = activity;
-        this.mApplicationComponent = applicationComponent;
     }
 
     @Provides
@@ -49,13 +44,4 @@ public class PresentationModule {
         return new ViewMvcFactory(getLayoutInflater(), getImageLoader());
     }
 
-    @Provides
-    GetCharactersUseCase getGetCharactersUseCase(){
-        return mApplicationComponent.getGetCharactersUseCase();
-    }
-
-    @Provides
-    GetCharacterDetailUseCase getGetCharacterDetailUseCase() {
-        return mApplicationComponent.getGetCharacterDetailUseCase();
-    }
 }
