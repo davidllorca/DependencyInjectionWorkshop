@@ -18,7 +18,8 @@ public class BaseActivity extends AppCompatActivity {
             throw new RuntimeException("There is no need to use injector more than once");
         }
         mIsInjectionDone = true;
-        return getApplicationComponent().newPresentationComponent(new PresentationModule(this));
+        return getApplicationComponent()
+                .newPresentationComponent(new PresentationModule(this));
     }
 
     private ApplicationComponent getApplicationComponent() {
